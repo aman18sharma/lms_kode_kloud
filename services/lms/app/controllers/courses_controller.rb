@@ -8,14 +8,14 @@ class CoursesController < ApplicationController
   end
 
   def show
-    render json: @course, status: :ok
+    render json: course_with_lessons_and_completion(@course), status: :ok
   end
 
   def create
     @course = Course.new(course_params)
 
     if @course.save
-      render json: @course, status: :created
+      render json: course_with_lessons_and_completion(@course), status: :created
     else
       render json: @course.errors, status: :unprocessable_content
     end
@@ -41,6 +41,26 @@ class CoursesController < ApplicationController
       rescue ActiveRecord::RecordNotFound => error
         render json: {message: "Record Not Found"}, status: :not_found
       end
+    end
+
+    def course_with_lessons_and_completion(course)
+      total_lessons = course.lessons.count
+      user_id = params[:user_id] || current_user.id
+      completion_percentage = 0
+
+      if user_id.present? && total_lessons > 0
+        completed_lessons_count = UserLessonCompletion.where(
+          user_id: user_id,
+          course_id: course.id
+        ).count
+
+        completion_percentage = (completed_lessons_count.to_f / total_lessons * 100).round
+      end
+
+      # Return the course payload with lessons and the new percentage
+      course.as_json(include: :lessons).merge(
+        completion_percentage: completion_percentage
+      )
     end
 
     # Only allow a list of trusted parameters through.

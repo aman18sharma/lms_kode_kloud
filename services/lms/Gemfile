@@ -48,3 +48,7 @@ group :development, :test do
 end
 # PostgreSQL connector
 gem "pg", "~> 1.5"
+gem 'devise'
+gem 'devise-jwt'
+
+gem "byebug", "~> 12.0", groups: [:development, :test]

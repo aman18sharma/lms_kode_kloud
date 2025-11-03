@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users
+
+  resources :users, only: [:index] do
+    get 'user_courses', to: 'users#user_courses'
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :courses do
     resources :lessons

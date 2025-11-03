@@ -38,7 +38,12 @@ class LessonsController < ApplicationController
   def mark_complete
     lesson = Lesson.find_by_id(params.expect(:id))
     render json: {message: "Lesson Not Found"}, status: :not_found and return if lesson.nil?
-    if lesson.update(completed: true)
+    user_lesson_completion = current_user
+                              .user_lesson_completions.new(course_id: lesson.course_id,
+                                                           lesson_id: lesson.id,
+                                                           completed_at: Time.now, 
+                                                           is_completed: true)
+    if user_lesson_completion.save
       render json: { message: "Lesson completed successfully!", lesson: lesson }, status: :ok
     else
       render json: @lesson.errors, status: :unprocessable_contentsssss 

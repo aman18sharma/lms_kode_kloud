@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  course: one
+  lesson: one
+  completed_at: 2025-11-03 19:41:11
+  is_completed: false
+
+two:
+  user: two
+  course: two
+  lesson: two
+  completed_at: 2025-11-03 19:41:11
+  is_completed: false
