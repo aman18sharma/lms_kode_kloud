@@ -1,3 +1,4 @@
 services/lms/tmp/*
 services/lms/log/development.log
 services/lms/db/schema.rb
+services/course_recommendations/tmp/*

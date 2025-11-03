@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For the 'pg' gem, the database name defaults to the app name + env
+  database: lms_kode_kloud
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root # Default user, might need to be changed
+  password: root
+  host: localhost
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
